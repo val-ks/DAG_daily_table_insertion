@@ -1,10 +1,16 @@
-The DAG runs every day at 15:00 and retrieves data for the previous day. It performs the following transformations:
+## Project Description
 
-1) In the `feed_actions` table (data about the news feed in the mobile application), it calculates the number of views and likes for each user's content.
-2) In the `message_actions` table (data about incoming and outgoing messages in the mobile application), it calculates the number of messages received and sent by each user, the number of people they message, and the number of people messaging them. Each extraction is performed in a separate task.
-3) Afterwards it combines the two tables into one and for this combined table, it calculates all the mentioned metrics for each slice based on gender, age, and operating system (OS). There are three separate tasks for each slice. 
-4) The final data including all the metrics is written to a separate table in ClickHouse.
-5) Every day the table is updated with new data.
+The project involves setting up a daily DAG (Directed Acyclic Graph) that runs at 15:00 and retrieves data for the previous day. The DAG performs various transformations on the data as outlined below:
+
+1. **Feed Actions Table**: In the `feed_actions` table, which contains data about the news feed in the mobile application, the DAG calculates the number of views and likes for each user's content.
+
+2. **Message Actions Table**: In the `message_actions` table, which includes data about incoming and outgoing messages in the mobile application, the DAG calculates the number of messages received and sent by each user, as well as the number of people they message and the number of people messaging them. Each extraction is performed in a separate task.
+
+3. **Combining Tables and Calculating Metrics**: The DAG then combines the two tables into one and calculates all the mentioned metrics for each slice based on gender, age, and operating system (OS). There are three separate tasks for each slice.
+
+4. **Writing to ClickHouse**: The final data, including all the calculated metrics, is written to a separate table in ClickHouse.
+
+5. **Daily Updates**: The table is updated with new data every day.
 
 The structure of the final table is as follows:
 
@@ -18,4 +24,7 @@ The structure of the final table is as follows:
 - Number of users who received messages: users_received
 - Number of users to whom messages were sent: users_sent
 
-The slices include OS, gender, and age.
+The slices include operating system (OS), gender, and age.
+
+By automating these data transformations and calculations, stakeholders can gain valuable insights into user engagement, content popularity, and messaging patterns based on different dimensions.
+
